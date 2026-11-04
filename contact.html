@@ -151,7 +151,9 @@
     </header>
 
     <section class="form-card">
-      <form id="contactForm">
+      <form id="contactForm"
+            action="https://script.google.com/macros/s/AKfycbx4fpNl3bKpx1umyqMTmvbYclZM2oJja157xGNopubPEl970Y89Y5-cGraoMcP-M9s3/exec"
+            method="post" target="_blank" rel="noopener">
 
         <div class="field">
           <label for="name">
@@ -225,69 +227,44 @@
   </main>
 
   <script>
-    // 新版 Google Apps Script 正式部署網址
-    const ENDPOINT =
-      "https://script.google.com/macros/s/AKfycbx4fpNl3bKpx1umyqMTmvbYclZM2oJja157xGNopubPEl970Y89Y5-cGraoMcP-M9s3/exec";
-
     const form = document.getElementById("contactForm");
     const button = document.getElementById("submitButton");
     const statusBox = document.getElementById("status");
+    let submitting = false;
 
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
-
-      if (!form.reportValidity()) return;
-
-      const data = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        subject: document.getElementById("subject").value,
-        category: document.getElementById("subject").value,
-        message: document.getElementById("message").value.trim(),
-        website: document.getElementById("website").value
-      };
-
-      if (data.website) return;
-
-      if (!data.name || !data.email ||
-          !data.subject || !data.message) {
-        statusBox.style.color = "#b43c3c";
-        statusBox.textContent = "請完整填寫必填欄位。";
+    form.addEventListener("submit", function(event) {
+      if (submitting) {
+        event.preventDefault();
         return;
       }
 
-      button.disabled = true;
-      button.textContent = "傳送中……";
-      statusBox.textContent = "";
-
-      try {
-        // Google Apps Script 跨網域接收
-        // no-cors 無法讀取伺服器的處理結果
-        await fetch(ENDPOINT, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(data)
-        });
-
-        statusBox.style.color = "#28764b";
-        statusBox.textContent =
-          "表單已送出，系統正在處理。請勿重複提交；若未獲回覆，請稍後再次聯絡。";
-
-        // 先保留表單內容，方便寄送異常時重新提交
-      } catch (error) {
-        console.error("表單傳送錯誤：", error);
-
-        statusBox.style.color = "#b43c3c";
-        statusBox.textContent =
-          "傳送時發生連線問題，請稍後再試。";
-      } finally {
-        button.disabled = false;
-        button.textContent = "✉ 送出諮詢訊息";
+      for (const field of form.querySelectorAll("input, textarea")) {
+        field.value = field.value.trim();
       }
+
+      if (form.elements.website.value || !form.reportValidity()) {
+        event.preventDefault();
+        return;
+      }
+
+      // 保留既有 category 相容欄位；其餘欄位由瀏覽器原生編碼。
+      let category = form.querySelector('input[name="category"]');
+      if (!category) {
+        category = document.createElement("input");
+        category.type = "hidden";
+        category.name = "category";
+        form.appendChild(category);
+      }
+      category.value = form.elements.subject.value;
+
+      // 原生 POST 會使用後端可接收的 application/x-www-form-urlencoded。
+      // 在新分頁呈現後端實際結果，不以 opaque fetch 回應宣告成功。
+      submitting = true;
+      button.disabled = true;
+      button.textContent = "已提交，請查看結果分頁";
+      statusBox.style.color = "#64748b";
+      statusBox.textContent =
+        "請查看新開啟分頁的處理結果；此處尚未確認寄信成功。請勿重複送出。若結果分頁未開啟，請先確認瀏覽器是否封鎖新分頁。";
     });
   </script>
 </body>
