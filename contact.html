@@ -194,7 +194,7 @@
             訊息內容 <span class="required">*</span>
           </label>
           <textarea id="message" name="message"
-                    maxlength="5000" required
+                    maxlength="3000" required
                     placeholder="請輸入您想告訴我們的內容……"></textarea>
         </div>
 
@@ -225,8 +225,9 @@
   </main>
 
   <script>
+    // 新版 Google Apps Script 正式部署網址
     const ENDPOINT =
-      "https://script.google.com/macros/s/AKfycbwqHJEaibnebxQex-puXt0aHjRccQeuPV08QBv9HhL6XZBjdTXYIACrFvZ5hv5E0WumIg/exec";
+      "https://script.google.com/macros/s/AKfycbx4fpNl3bKpx1umyqMTmvbYclZM2oJja157xGNopubPEl970Y89Y5-cGraoMcP-M9s3/exec";
 
     const form = document.getElementById("contactForm");
     const button = document.getElementById("submitButton");
@@ -238,18 +239,20 @@
       if (!form.reportValidity()) return;
 
       const data = {
-        name: form.name.value.trim(),
-        email: form.email.value.trim(),
-        phone: form.phone.value.trim(),
-        subject: form.subject.value,
-        message: form.message.value.trim(),
-        website: form.website.value
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        subject: document.getElementById("subject").value,
+        category: document.getElementById("subject").value,
+        message: document.getElementById("message").value.trim(),
+        website: document.getElementById("website").value
       };
 
       if (data.website) return;
 
       if (!data.name || !data.email ||
           !data.subject || !data.message) {
+        statusBox.style.color = "#b43c3c";
         statusBox.textContent = "請完整填寫必填欄位。";
         return;
       }
@@ -259,6 +262,8 @@
       statusBox.textContent = "";
 
       try {
+        // Google Apps Script 跨網域接收
+        // no-cors 無法讀取伺服器的處理結果
         await fetch(ENDPOINT, {
           method: "POST",
           mode: "no-cors",
@@ -270,10 +275,12 @@
 
         statusBox.style.color = "#28764b";
         statusBox.textContent =
-          "訊息已送出，請等待確認；若長時間未獲回覆，請再次聯絡。";
-        form.reset();
+          "表單已送出，系統正在處理。請勿重複提交；若未獲回覆，請稍後再次聯絡。";
 
+        // 先保留表單內容，方便寄送異常時重新提交
       } catch (error) {
+        console.error("表單傳送錯誤：", error);
+
         statusBox.style.color = "#b43c3c";
         statusBox.textContent =
           "傳送時發生連線問題，請稍後再試。";
