@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>關於我們｜AURELIA VOYAGE</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  color:#263a4a;
+  background:#fffaf4;
+  line-height:1.8;
+}
+main{max-width:1080px;margin:auto;padding:30px 22px 65px}
+.intro{text-align:center;padding:25px 10px 35px}
+.eyebrow{font-size:13px;letter-spacing:3px;color:#b58049;font-weight:700}
+h1{font-size:clamp(27px,4vw,39px);color:#193b62;margin:8px 0 14px}
+.intro p{max-width:760px;margin:12px auto;color:#536575}
+.section-title{text-align:center;color:#193b62;font-size:27px;margin:28px 0}
+.divider{width:70px;height:4px;border-radius:9px;background:#e7b36e;margin:0 auto 28px}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0 55px}
+.service{
+  background:white;border:1px solid #f1e5d5;border-radius:20px;
+  padding:30px 23px;text-align:center;
+  box-shadow:0 7px 24px rgba(43,68,90,.07)
+}
+.emoji{font-size:42px}
+.service h3{color:#1d527e;margin:12px 0}
+.service p{font-size:15px;color:#607080;margin:0}
+.contact{
+  background:white;border:1px solid #e9e2d7;border-radius:22px;
+  padding:32px;box-shadow:0 8px 28px rgba(43,68,90,.07)
+}
+.contact>p{text-align:center;color:#657585}
+form{max-width:720px;margin:25px auto 0}
+.field{margin-bottom:18px}
+label{display:block;font-weight:700;color:#314c61;margin-bottom:7px}
+input,select,textarea{
+  width:100%;padding:13px 15px;border:1px solid #cbd7df;
+  border-radius:11px;background:#fff;color:#263a4a;
+  font:inherit;font-size:16px
+}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid #80b7dc;outline-offset:1px
+}
+textarea{min-height:150px;resize:vertical}
+.required{color:#c04444}
+.submit{
+  display:block;width:100%;padding:15px;border:0;border-radius:12px;
+  background:#1674b7;color:white;font:inherit;font-weight:700;
+  font-size:17px;cursor:pointer
+}
+.submit:hover{background:#0e5b93}
+.submit:disabled{opacity:.6;cursor:wait}
+.status{min-height:30px;text-align:center;font-weight:600;margin-top:15px}
+.privacy{font-size:13px;color:#77838d;text-align:center;margin-top:16px}
+.footer{text-align:center;color:#81909c;font-size:13px;padding-top:38px}
+.honeypot{position:absolute;left:-9999px;opacity:0}
+@media(max-width:700px){
+  main{padding:18px 14px 40px}
+  .services{grid-template-columns:1fr;gap:14px;margin-bottom:35px}
+  .service{padding:23px}
+  .contact{padding:24px 16px}
+  .section-title{font-size:24px}
+}
+</style>
+</head>
+<body>
+<main>
+  <section class="intro">
+    <div class="eyebrow">AURELIA VOYAGE</div>
+    <h1>關西只是起點，世界在前方</h1>
+    <div class="divider"></div>
+    <p>我們是一家以旅人需求為核心的旅遊顧問品牌，相信美好的旅行，始於用心的規劃。</p>
+    <p>「關西旅誌」是我們的第一步。我們整合景點、交通、季節特色與行程建議，將繁雜資訊整理成清楚實用的指南，協助每位旅人找到適合自己的旅行方式。</p>
+    <p>未來，我們將逐步拓展更多地區，持續以專業與熱情，陪伴旅人探索世界，讓每一次出發都更有方向。</p>
+  </section>
+
+  <h2 class="section-title">我們的服務</h2>
+  <div class="divider"></div>
+
+  <section class="services">
+    <article class="service">
+      <div class="emoji">🧭</div>
+      <h3>智慧行程規劃</h3>
+      <p>依據旅遊天數、目的地及個人偏好，提供更有方向的行程規劃建議。</p>
+    </article>
+    <article class="service">
+      <div class="emoji">🚆</div>
+      <h3>旅遊資訊整合</h3>
+      <p>整理交通、住宿、美食購物與旅遊實用資訊，降低行前準備的複雜度。</p>
+    </article>
+    <article class="service">
+      <div class="emoji">🌸</div>
+      <h3>個人化旅遊建議</h3>
+      <p>從不同旅人的需求出發，協助比較選擇，打造更適合自己的旅行方式。</p>
+    </article>
+  </section>
+
+  <section class="contact">
+    <h2 class="section-title">聯絡我們</h2>
+    <div class="divider"></div>
+    <p>有旅遊規劃或網站使用方面的問題嗎？歡迎留下訊息。</p>
+
+    <form id="contactForm">
+      <div class="field">
+        <label for="name">姓名 <span class="required">*</span></label>
+        <input id="name" name="name" maxlength="80" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">電子郵件 <span class="required">*</span></label>
+        <input id="email" name="email" type="email" maxlength="150" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="category">諮詢類型 <span class="required">*</span></label>
+        <select id="category" name="category" required>
+          <option value="">請選擇諮詢類型</option>
+          <option>旅遊行程規劃</option>
+          <option>交通與住宿資訊</option>
+          <option>美食與購物資訊</option>
+          <option>網站使用問題</option>
+          <option>其他事項</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">需求內容 <span class="required">*</span></label>
+        <textarea id="message" name="message" maxlength="3000"
+          placeholder="請描述您的需求或想詢問的問題……" required></textarea>
+      </div>
+
+      <div class="honeypot" aria-hidden="true">
+        <label for="website">網站</label>
+        <input id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button class="submit" id="submitBtn" type="submit">✉️ 送出諮詢訊息</button>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <p class="privacy">
+        您提供的資料僅用於回覆本次諮詢，請勿填寫密碼、證件號碼或付款資料。
+      </p>
+    </form>
+  </section>
+
+  <div class="footer">© AURELIA VOYAGE｜關西旅誌</div>
+</main>
+
+<script>
+const ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbwqHJEaibnebxQex-puXt0aHjRccQeuPV08QBv9HhL6XZBjdTXYIACrFvZ5hv5E0WumIg/exec";
+
+const form = document.getElementById("contactForm");
+const button = document.getElementById("submitBtn");
+const statusBox = document.getElementById("status");
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  const data = Object.fromEntries(new FormData(form).entries());
+
+  if (data.website) return;
+
+  button.disabled = true;
+  button.textContent = "傳送中……";
+  statusBox.textContent = "";
+
+  try {
+    await fetch(ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
+
+    statusBox.style.color = "#28764b";
+    statusBox.textContent =
+      "訊息已提交，請等待確認。若長時間未獲回覆，請再次聯絡。";
+    form.reset();
+
+  } catch (error) {
+    statusBox.style.color = "#b43c3c";
+    statusBox.textContent =
+      "傳送時發生連線問題，請稍後再試。";
+  } finally {
+    button.disabled = false;
+    button.textContent = "✉️ 送出諮詢訊息";
+  }
+});
+</script>
+</body>
+</html>
